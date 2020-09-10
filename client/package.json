@@ -1,5 +1,6 @@
 {
   "name": "gm-store",
+  "proxy": "http://localhost:3333",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "axios": "^0.20.0",
     "framer-motion": "^2.6.5",
     "next": "9.5.2",
     "react": "16.13.1",

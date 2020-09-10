@@ -1,4 +1,7 @@
 require("dotenv").config();
+const cors = require("cors");
+const path = require("path");
+const passport = require("passport");
 const express = require("express");
 const helmet = require("helmet");
 const mongoose = require("mongoose");
@@ -10,8 +13,7 @@ const PORT = 3333 || process.env.PORT;
 // ====================
 // middlewares
 // ====================
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 app.use(
   helmet({
     contentSecurityPolicy: false,
@@ -21,16 +23,16 @@ app.use(
     },
   })
 );
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(passport.initialize());
+require("./middlewares/passport-config")(passport);
 
 // ====================
 // Routes
 // ====================
+app.use(express.static(path.join(__dirname, "public")));
 app.use("/api", require("./api_endpoints"));
-
-// ====================
-// Starting Server
-// ====================
-app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`));
 
 // ===================
 // Connecting to DB
@@ -42,3 +44,8 @@ mongoose.connect(process.env.MONGO_URI, {
 });
 DB.once("open", () => console.log(`Connection Established`));
 DB.on("error", (e) => console.log(e));
+
+// ====================
+// Starting Server
+// ====================
+app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`));

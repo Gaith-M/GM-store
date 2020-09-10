@@ -3,6 +3,6 @@ const router = express.Router();
 
 router.use("/user", require("./user"));
 router.use("/product", require("./product"));
-router.use("/order", require("./order"));
+router.use("/auth", require("./auth_OAuth"));
 
 module.exports = router;
