@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const passport = require("passport");
-const { body, check } = require("express-validator");
+const { body } = require("express-validator");
 const { register, login } = require("../controllers/user");
+const JWT = require("jsonwebtoken");
 
 // =======================
 // @Path: /api/auth/register
@@ -42,25 +43,49 @@ router.post(
 );
 
 // =======================
-// @Path: /api/user/auth
-// @Type: Privet
-// @Desc: Authenticate and Authorize a user
+// @Path: /api/auth/facebook
+// @Type: public
+// @Desc: register or login a user  with FB
 // =======================
-// router.get("/", (req, res, next) => res.json("auth"));
+router.get(
+  "/facebook",
+  passport.authenticate("facebook", { scope: ["email"] })
+);
+
+// =========================
+// Fackbook callback route
+// =========================
+router.get(
+  "/facebook/callback",
+  passport.authenticate("facebook"),
+  async (req, res) => {
+    const token = JWT.sign({ email: req.user.email }, process.env.JWT_SECRET, {
+      expiresIn: "3hr",
+    });
+    res.status(200).json({ token, user: req.user });
+  }
+);
 
 // =========================
 // Google Authentication Routes
 // =========================
-// router.post("/");
+router.get(
+  "/google",
+  passport.authenticate("google", { scope: ["profile", "email"] })
+);
 
 // =========================
-// Facebook Authentication Routes
+// Google redirect end point
 // =========================
-// router.post("/");
-
-// =========================
-// Instagram Authentication Routes
-// =========================
-// router.post("/");
+router.get(
+  "/google/callback",
+  passport.authenticate("google"),
+  async (req, res) => {
+    const token = JWT.sign({ email: req.user.email }, process.env.JWT_SECRET, {
+      expiresIn: "3hr",
+    });
+    res.json({ user: req.user, token });
+  }
+);
 
 module.exports = router;

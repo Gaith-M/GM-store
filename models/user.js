@@ -1,15 +1,16 @@
 const mongoose = require("mongoose");
 
 const user_schema = new mongoose.Schema({
+  facebookID: String,
+  googleID: String,
+  instagramID: String,
   firstName: {
     type: String,
-    required: true,
     trim: true,
     maxlength: 50,
   },
   lastName: {
     type: String,
-    required: true,
     trim: true,
     maxlength: 50,
   },
@@ -21,7 +22,7 @@ const user_schema = new mongoose.Schema({
     validate: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     maxlength: 99,
   },
-  password: { type: String, required: true, minlength: 8 },
+  password: { type: String, minlength: 8 },
   cart: {
     type: Object,
     items: [Object],

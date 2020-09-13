@@ -7,7 +7,9 @@ const { register } = require("../controllers/user");
 // @Type: Privet
 // @Desc: get cart data
 // =======================
-router.get("/cart", (req, res, next) => res.json("cart data"));
+router.get("/cart", passport.authenticate("jwt"), (req, res, next) =>
+  res.json("cart data")
+);
 
 // =======================
 // @Path: /api/user/cart

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import Link from "next/link";
 
 const Home = () => {
   const [firstName, set_firstName] = useState("");
@@ -114,6 +115,13 @@ const Home = () => {
           Submit
         </button>
       </form>
+      <hr />
+      <Link href="http://localhost:3333/api/auth/facebook">
+        <a>Continue with Facebook</a>
+      </Link>{" "}
+      <Link href="http://localhost:3333/api/auth/google">
+        <a>Continue with Google</a>
+      </Link>
     </>
   );
 };

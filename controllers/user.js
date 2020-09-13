@@ -36,9 +36,13 @@ const register = async (req, res, next) => {
 
     const user = await new_user.save();
 
-    const token = JWT.sign({ name: user.firstName }, process.env.JWT_SECRET, {
-      expiresIn: "3hr",
-    });
+    const token = JWT.sign(
+      { name: user.firstName, email: user.email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "3hr",
+      }
+    );
 
     res.status(201).json({ result: true, token, user });
   } catch (err) {
@@ -47,7 +51,7 @@ const register = async (req, res, next) => {
 };
 
 // ==================
-// Register Controller
+// login Controller
 // ==================
 const login = async (req, res, next) => {
   const validation_result = validationResult(req);
@@ -68,9 +72,13 @@ const login = async (req, res, next) => {
     const is_valid_password = bcrypt.compareSync(password, user.password);
     if (!is_valid_password) return res.json("invalid password");
 
-    const token = JWT.sign({ name: user.firstName }, process.env.JWT_SECRET, {
-      expiresIn: "3hrs",
-    });
+    const token = JWT.sign(
+      { name: user.firstName, email: user.email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "3hrs",
+      }
+    );
 
     res.status(200).json({ result: true, user, token });
   } catch (err) {
