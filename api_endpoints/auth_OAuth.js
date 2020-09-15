@@ -45,7 +45,7 @@ router.post(
 // =======================
 // @Path: /api/auth/facebook
 // @Type: public
-// @Desc: register or login a user  with FB
+// @Desc: register or login a user using FB
 // =======================
 router.get(
   "/facebook",
@@ -53,7 +53,7 @@ router.get(
 );
 
 // =========================
-// Fackbook callback route
+// Fackbook callback endpoint
 // =========================
 router.get(
   "/facebook/callback",
@@ -67,7 +67,9 @@ router.get(
 );
 
 // =========================
-// Google Authentication Routes
+// @Path: /api/auth/google
+// @Type public
+// @Desc register or login a user using Google
 // =========================
 router.get(
   "/google",
@@ -75,7 +77,7 @@ router.get(
 );
 
 // =========================
-// Google redirect end point
+// Google Callback endpoint
 // =========================
 router.get(
   "/google/callback",

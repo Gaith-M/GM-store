@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const user_schema = new mongoose.Schema({
+  role: { type: String, default: "user" },
   facebookID: String,
   googleID: String,
-  instagramID: String,
   firstName: {
     type: String,
     trim: true,
@@ -23,17 +23,9 @@ const user_schema = new mongoose.Schema({
     maxlength: 99,
   },
   password: { type: String, minlength: 8 },
-  cart: {
-    type: Object,
-    items: [Object],
-    total: Number,
-  },
-  wish_list: [Object],
-  orders: [Object],
-  purchase_history: [Object],
-  facebookID: String,
-  googleID: String,
-  instagramID: String,
+  cart: [Object], //each object will contain the product as well as related info such as the qty, size, color etc...
+  wish_list: [String],
+  purchase_history: [String],
   register_date: { type: Date, default: Date.now() },
 });
 

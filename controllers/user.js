@@ -18,7 +18,7 @@ const register = async (req, res, next) => {
   }
 
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, role } = req.body;
 
     // check if email exists
     const is_available = await User.findOne({ email });
@@ -28,6 +28,7 @@ const register = async (req, res, next) => {
     const hashed_password = bcrypt.hashSync(password, 10);
 
     const new_user = new User({
+      role,
       firstName,
       lastName,
       email,
@@ -36,15 +37,24 @@ const register = async (req, res, next) => {
 
     const user = await new_user.save();
 
-    const token = JWT.sign(
-      { name: user.firstName, email: user.email },
-      process.env.JWT_SECRET,
+    const token = JWT.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "20min",
+    });
+    const refreash_token = JWT.sign(
+      { id: user._id },
+      process.env.JWT_SECONDARY_SECRET + user.password,
       {
-        expiresIn: "3hr",
+        expiresIn: "7d",
       }
     );
 
-    res.status(201).json({ result: true, token, user });
+    // set the token in the response's headers instead of sending it in the body
+    res.set("Access-Control-Expose-Headers", "x-auth-token x-refreash-token");
+    res.set("x-auth-token", token);
+    res.set("x-refreash-token", refreash_token);
+
+    // keep tokens in json res for now
+    res.status(201).json({ result: true, token, refreash_token, user });
   } catch (err) {
     next(err);
   }
@@ -72,15 +82,24 @@ const login = async (req, res, next) => {
     const is_valid_password = bcrypt.compareSync(password, user.password);
     if (!is_valid_password) return res.json("invalid password");
 
-    const token = JWT.sign(
-      { name: user.firstName, email: user.email },
-      process.env.JWT_SECRET,
+    const token = JWT.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "20m",
+    });
+
+    const refreash_token = JWT.sign(
+      { id: user._id },
+      process.env.JWT_SECONDARY_SECRET + user.password,
       {
-        expiresIn: "3hrs",
+        expiresIn: "7d",
       }
     );
 
-    res.status(200).json({ result: true, user, token });
+    // set the token in the response's headers instead of sending it in the body
+    res.set("Access-Control-Expose-Headers", "x-auth-token x-refreash-token");
+    res.set("x-auth-token", token);
+    res.set("x-refreash-token", refreash_token);
+
+    res.status(200).json({ result: true, token, refreash_token, user });
   } catch (err) {
     next(err);
   }
