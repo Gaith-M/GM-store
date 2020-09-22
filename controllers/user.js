@@ -37,11 +37,15 @@ const register = async (req, res, next) => {
 
     const user = await new_user.save();
 
-    const token = JWT.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "20min",
-    });
+    const token = JWT.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "20min",
+      }
+    );
     const refreash_token = JWT.sign(
-      { id: user._id },
+      { id: user._id, role: user.role },
       process.env.JWT_SECONDARY_SECRET + user.password,
       {
         expiresIn: "7d",
@@ -82,12 +86,16 @@ const login = async (req, res, next) => {
     const is_valid_password = bcrypt.compareSync(password, user.password);
     if (!is_valid_password) return res.json("invalid password");
 
-    const token = JWT.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "20m",
-    });
+    const token = JWT.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "20m",
+      }
+    );
 
     const refreash_token = JWT.sign(
-      { id: user._id },
+      { id: user._id, user: user.role },
       process.env.JWT_SECONDARY_SECRET + user.password,
       {
         expiresIn: "7d",

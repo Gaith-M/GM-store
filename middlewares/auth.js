@@ -36,7 +36,7 @@ const auth = async (req, res, next) => {
         res.set("x-auth-token", token);
         res.set("x-refresh-token", refresh_token);
 
-        req.user = user;
+        req.user = { id: user._id, role: user.role };
         next();
       }
     }

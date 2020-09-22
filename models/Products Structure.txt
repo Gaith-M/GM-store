@@ -1,0 +1,31 @@
+catagories:
+
+Done:
+  accessories and jewelry: Belts, watches, rings, necklaces, earrings, Bracelets, gloves, sunglasses, Brooches and Pins, Anklets, bags, headwraps, hats, hair accessories, ties, purses and wallets, scarves, Shawls and wraps‎
+
+  perfume: parfum, Eau de Parfum(EDP), Eau de Toilette (EDT), Eau de Cologne(EDC), aftershave
+
+  Footwear‎:  Sneakers, Boots, Flip-flops, slippers, Cleats, Sandals, Clogs, Oxford, Bluchers, Loafers, heels, Stilettos, Slingbacks, Ballet Flats
+
+  socks & hosiery: Knee High socks, Calf Socks, Ankle Socks, Quarter Socks, Crew socks, Mid Calf Socks, Thigh High Socks, No Show Socks, stockings
+
+  underwear & lingerie: Thong, Hipster, Bikini, Boyshort, G-String, Brief, High-Cut/French-Cut, Seamless, lingerie, boxers, trunks, briefs for men, Bras: push-up bra, padded, T-shirt bra, Convertible, strapless, Balconette, lace, Bralette, sports, plunge, stick-on, wired Bras, Maternity bras, Minimizer bras, transparent strap bras, cami bra, long line bra, cage bra, Halter- Neck Bra, Bandeau Bra, non-padded bra, demi, racerback, Blouze Bra, front open, wireless bra, full support bra, beginner bra, backless bra, seamless bra, Multi Way, low-back, Mastectomy
+
+  pants: Chinos, Cords, Drawstring, Slim-Fit, Wool trousers, Relaxed Leg, Joggers, Cropped trousers, Cargo pants, High-Waisted, Pleated Trousers, Tracksuit Bottoms, CULOTTES, PALAZZO, SAILOR pants,  PEGGED PANTS, TAPERED pants, BOOT CUT PANTS, CIGARETTE PANTS, FORMAL PANTS, Baggy Pants, jeans
+  shorts: Tennis Shorts, running shorts, cargo shorts, Pleated shorts, flat front shorts, Denim Shorts, swimming trunks, Bermuda , chino, Board , cycling shorts, leather shorts, Plaid shorts
+
+  Coats & Jackets‎: Bomber Jackets, Biker Jacket, Trucker Jacket, Denim Jackets, Track jacket, Blouson, Hooded, Parka, Shearling, Anorak, Leather , Denim , Quilted , Puffer, Linen, Cropped , Drawstring, Cashmere/Wool Jackets, Barbour, COATS: Blazers, Fur Coats, Overcoat, Evening coat, Maxi coats, Trench Coat, Pea coat, Raincoat, Crombie Coat
+
+  One-piece suits‎: Jumpsuits, Western Dresses, Rompers, Babydoll Dresses, One Piece Swimsuits/Bodysuit, Dungarees
+
+  Tops: Blouse, Crop Top, Tank Top, Cami Top, Tube Top, Tunic Top, Maxi/Longline Top, Peplum, Bodysuit, Bardot/Off Shoulder, Kaftan, Wrap Top, Tulip Top, Cold Shoulder Top, Asymmetric Top, Cape Top, Cinched Waist Top, Shirt Style Top, Layered Top, Styled Back, One Shoulder Top, High Low Top, Choker Top, Hooded Top, Lace Top, Oxford Button-Down Shirt, dress shirt, Cuban Collar Shirt, overshirt, Flannel Shirt, Office Shirt, chambray, Classic Short Sleeve Shirt, Denim Shirt, Linen Shirt, Polo shirt
+
+  Dresses‎: Midi Dress, off the shoulder, shift dress, bodycon dress, A-line dress, mini dress, maxi dress. wrap dress, halter dress, high-low dress, Sheath dress, peplum dress, sweater dress, pencil dress, shirt dress, slip dress, Mermaid Silhouette Dress, T-shirt dress, Tea length dress, cocktail dress, denim dress, Pinafore dress, Bardot dress, Tube dress, Qipao dress, Long Sleeve dress, bell Sleeve dress, Strapless, Blazer dress, Empire Waist Dress, Sun dress, One Shoulder Dress, Asymmetrical Dress, Bandage Dress, Pouf dress, Princess Silhouette Dress
+
+  Gowns‎: Ball Gown, Mermaid gown, A-Line Gown, Sheath gown, Bouffant skirt gown, Circular skirt gown , Full Skirt Gown, Bustle gown, Bias cut gown, Asymmetrical Gown, Tiered gown, Panel gown, Strapless gown, Backless gown, Cami gown, Empire waist gown, Maxi Gown, Halter neck gown
+
+  Skirts‎: A-line skirt, Asymmetrical skirt, Box pleat skirt, Bubble skirt, Circular skirt, Cowl skirt, Gathered skirt, Godet and gored skirts, Handkerchief skirt, High/low skirt, High waisted skirt, Mermaid or fishtail skirt, Miniskirt, Pencil skirt, Peplum skirt, Pleated Skirt, Sarong skirt, Tiered and layered skirts, Tulip skirt, Wrap skirt, Yoke skirt, Knife Pleated, Sheath skirt
+
+  Robes and cloaks‎: bathrobes, sleep robes
+
+  tags: chic, formal, sporty, casual, chic casual, informal, sporty chic, VINTAGE, ARTSY, GRUNGE, BOHEMIAN, SEXY, EXOTIC, TRENDY, VIBRANT, PREPPY, ELEGANT, wild west, GIRL NEXT DOOR, PUNK, TOMBOY, GOTHIC, ROCKER, ETHNIC, EVENING, GIRLY, MATERNITY, LOLITA, HIP HOP, KAWAII, LAGENLOOK, GEEKY CHIC, MILITARY, GARCONNE, VACATION, KPOP

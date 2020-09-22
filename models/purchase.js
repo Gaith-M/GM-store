@@ -5,7 +5,7 @@ const purchase_schema = new Schema({
   product_name: String,
   price: Number,
   quantity: Number,
-  buyer: String,
+  buyer_id: String,
   date: { type: Date, default: Date.now() },
 });
 

@@ -8,7 +8,6 @@ const new_tokens = async (model, refresh_token, secret_one, secret_two) => {
 
     if (id) {
       const user = await model.findOne({ _id: id });
-
       if (!user) return {};
 
       const refresh_secret = secret_two + user.password;
