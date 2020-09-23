@@ -29,7 +29,7 @@ module.exports = async (req, res, next) => {
 
     const products = await model
       .find(search_conditions)
-      .select("name brand price sex quantity tags -_id");
+      .select("name brand price sex quantity tags model_id -_id");
 
     req.products = products;
     next();

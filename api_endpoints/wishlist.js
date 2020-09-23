@@ -1,26 +1,30 @@
 const router = require("express").Router();
+const auth = require("../middlewares/auth");
+const {
+  toggle_item_in_wishlist,
+  clear_wishlist,
+} = require("../controllers/wishlist");
+
+// =================================
+// The Wishlist is a part of the user model and endpoints. however, it has been placed in a different file for easier managment
+// =================================
 
 // =======================
-// @Path: /api/user/wishlist
-// @Type: Privet
-// @Desc: get wishlist data
+// The wish list will be retreived as a part of the user document
 // =======================
-router.get("/wishlist", (req, res, next) => res.json("wishlist"));
 
 // =======================
-// @Path: /api/user/wishlist
+// @Path: /api/wishlist
 // @Type: Privet
 // @Desc: add wishlist data
 // =======================
-router.post("/wishlist/:id", (req, res, next) => res.json("added to wishlist"));
+router.post("/", auth, toggle_item_in_wishlist);
 
 // =======================
-// @Path: /api/user/wishlist
+// @Path: /api/wishlist
 // @Type: Privet
-// @Desc: remove wishlist data
+// @Desc: clear  wishlist data
 // =======================
-router.delete("/wishlist/:id", (req, res, next) =>
-  res.json("removed from wishlist")
-);
+router.delete("/", auth, clear_wishlist);
 
 module.exports = router;

@@ -29,3 +29,8 @@ Done:
   Robes and cloaks‎: bathrobes, sleep robes
 
   tags: chic, formal, sporty, casual, chic casual, informal, sporty chic, VINTAGE, ARTSY, GRUNGE, BOHEMIAN, SEXY, EXOTIC, TRENDY, VIBRANT, PREPPY, ELEGANT, wild west, GIRL NEXT DOOR, PUNK, TOMBOY, GOTHIC, ROCKER, ETHNIC, EVENING, GIRLY, MATERNITY, LOLITA, HIP HOP, KAWAII, LAGENLOOK, GEEKY CHIC, MILITARY, GARCONNE, VACATION, KPOP
+
+  ***If a tag is made up of two or more words, use - instead of spaces***
+
+  ***To make fetching items using their model id achievable, the model_id must follow this form: type-sex-id
+  this will allow the extraction of data in order to retreive it correctly***

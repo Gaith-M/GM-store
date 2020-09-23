@@ -22,7 +22,7 @@ const pagniated_results = require("../middlewares/pagination");
 // ======================
 // @Path: api/search/:sex/:type[query string]
 // @Type: Public
-// @Desc: Get products by its type and sex
+// @Desc: Get products by its type and sex with optional custome search
 // ======================
 router.get(
   "/search/:sex/:type",

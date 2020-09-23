@@ -24,8 +24,8 @@ const user_schema = new mongoose.Schema({
   },
   password: { type: String, minlength: 8 },
   cart: [Object], //each object will contain the product as well as related info such as the qty, size, color etc...
-  wish_list: [String],
-  purchase_history: [String],
+  wishlist: [String],
+  orders_history: { type: Array, required: true },
   register_date: { type: Date, default: Date.now() },
 });
 
