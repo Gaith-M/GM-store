@@ -15,6 +15,7 @@ const PORT = 3333 || process.env.PORT;
 // middlewares
 // ====================
 app.use(cors());
+
 app.use(
   helmet({
     contentSecurityPolicy: false,
@@ -29,11 +30,21 @@ app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 
 // ====================
+// Static Folder
+// ====================
+app.use(express.static(path.join(__dirname, "public")));
+// ====================
 // Routes
 // ====================
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/api", require("./api_endpoints"));
 
+// ===================
+// Error Handling
+// ===================
+app.use((err, req, res, next) => {
+  res.status(500).json(err.message);
+});
 // ===================
 // Connecting to DB
 // ===================

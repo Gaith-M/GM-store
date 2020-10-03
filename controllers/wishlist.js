@@ -1,5 +1,4 @@
-const { model } = require("../models/user");
-const User = require("../models/user");
+const User = require("../models/User");
 // =================================
 // The Wishlist is a part of the user model and endpoints. however, it has been placed in a different file for easier managment
 // =================================

@@ -1,0 +1,46 @@
+***The Cart***
+Each User will has a cart object as a part of its document. unauthenticated users will not be able to use the cart, and they will be directed to the login/register page.
+
+The cart will hold the currency chosen by the user, the total amount of items in the cart for quick access, and an array which will contain the items themselves.
+
+Each item in the items array will be an object that will contain the following:
+Name, price, [color, price both are editable], and the total quantity (how many units of the items exists in the cart)
+
+The cart will have the following actions:
+
+A- add item: add an item to the cart. there is two possible course of action here:
+    1- the item isn't in the Cart
+    2- the item is in the cart
+
+    either ways, the items array will be searched for the item to be added. if it exists, then only the quantity property in it will be increased
+    if it does not, then a new item entry will be created
+
+(B- increase quantity of an item
+C- decrease quantity of an item) both of these can be managed by one function -change quantity-
+D- delete an item from the cart
+E- edit item details: color and size
+F- delete an item directly
+G- empty cart
+
+H- Change the currency of the cart
+
+
+the item entry will show the available colors and sizes and highlights the selected one
+
+Once the user proceeds to the checkout, an order with the items in the cart will be created
+
+
+To do now:
+    make the cart endpoints then carry on with the charge system
+
+    Done:
+        1- items can be added to the cart. if the item already exist, the quantity will be increased, and Update the cart total item count
+        2- items can be edited after selected (this includes changing quantity, deleting the item, and changing color and size)
+
+        to add or edit an item, the data must be sent in an object under a prop called "product_info
+        adding requires: model_id, type, and qty[optional]
+        updating requires: model_id, qty-colors-sizes[optional]
+
+        3- Individual items can be deleted based on their model_id
+        4- the items in the cart can all be deleted at once
+        5- currency can be changed

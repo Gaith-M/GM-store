@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const { Schema, model } = require("mongoose");
 
-const user_schema = new mongoose.Schema({
+const user_schema = new Schema({
   role: { type: String, default: "user" },
   facebookID: String,
   googleID: String,
@@ -23,10 +23,14 @@ const user_schema = new mongoose.Schema({
     maxlength: 99,
   },
   password: { type: String, minlength: 8 },
-  cart: [Object], //each object will contain the product as well as related info such as the qty, size, color etc...
+  cart: {
+    currency: { type: String, default: "usd" },
+    total_quantity: { type: Number, default: 0 },
+    items: { type: Array, default: [Object] },
+  },
   wishlist: [String],
   orders_history: { type: Array, required: true },
   register_date: { type: Date, default: Date.now() },
 });
 
-module.exports = mongoose.model("User", user_schema);
+module.exports = model("User", user_schema);

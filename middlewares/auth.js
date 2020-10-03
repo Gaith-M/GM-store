@@ -1,5 +1,5 @@
 const JWT = require("jsonwebtoken");
-const User = require("../models/user");
+const User = require("../models/User");
 const new_tokens = require("../helper_functions/new_tokens");
 
 // stop the process if the main token is invalid (not just expired, but wrong)

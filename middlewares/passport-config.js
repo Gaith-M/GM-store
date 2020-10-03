@@ -4,7 +4,7 @@ const JWT_Strategy = require("passport-jwt").Strategy;
 const ExtractJWT = require("passport-jwt").ExtractJwt;
 const Facebook_strategy = require("passport-facebook").Strategy;
 const Google_strategy = require("passport-google-oauth20").Strategy;
-const User = require("../models/user");
+const User = require("../models/User");
 
 // =================
 // General Setup

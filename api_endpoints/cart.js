@@ -1,31 +1,66 @@
 const router = require("express").Router();
-
+const {
+  add_to_cart,
+  edit_item,
+  delete_item,
+  empty_cart,
+  change_currency,
+} = require("../controllers/cart");
+const auth = require("../middlewares/auth");
+const User = require("../models/User");
 // =======================
-// @Path: /api/user/
+// @Path: /api/cart
 // @Type: Privet
-// @Desc: get cart data
+// @Desc: add an item to the cart
 // =======================
-router.get("/cart", (req, res, next) => res.json("cart data"));
+router.post("/", auth, add_to_cart, delete_item);
 
 // =======================
-// @Path: /api/user/cart
+// @Path: /api/cart/id
+// Fix cart if broken when I'm working on it
+// =======================
+router.post("/fix/:id", async (req, res, next) => {
+  console.log("recieved!");
+  try {
+    const { id } = req.params;
+    const user = await User.findOneAndUpdate(
+      { _id: id },
+      { "cart.items": [] },
+      { new: true, useFindAndModify: false }
+    );
+    console.log(user);
+    res.status(200).json("done");
+  } catch (err) {
+    next(err);
+  }
+});
+
+// =======================
+// @Path: /api/cart
 // @Type: Privet
-// @Desc: Add an item to the cart (based on id)
+// @Desc: increase the amount of a product
 // =======================
-router.post("/cart/:id", (req, res, next) => res.json("added to cart"));
+router.patch("/", auth, edit_item);
 
 // =======================
-// @Path: /api/user/cart
-// @Type: Privet
-// @Desc: remove an item to the cart (based on id)
-// =======================
-router.delete("/cart/:id", (req, res, next) => res.json("deleted from cart"));
-
-// =======================
-// @Path: /api/user/cart
+// @Path: /api/cart
 // @Type: Privet
 // @Desc: update am item in the cart
 // =======================
-router.patch("/cart/:id", (req, res, next) => res.json("item updated"));
+router.delete("/", auth, delete_item);
+
+// =======================
+// @Path: /api/cart/all
+// @Type: Privet
+// @Desc: Empty all items from the cart
+// =======================
+router.delete("/all", auth, empty_cart);
+
+// =======================
+// @Path: /api/cart/all
+// @Type: Privet
+// @Desc: Empty all items from the cart
+// =======================
+router.patch("/change_currency", auth, change_currency);
 
 module.exports = router;

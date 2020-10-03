@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const has_role = require("../middlewares/has_role");
 const auth = require("../middlewares/auth");
-const User = require("../models/user");
+const User = require("../models/User");
 
 // =============================
 // @Path /api/admin/dashboard
