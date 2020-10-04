@@ -44,3 +44,7 @@ To do now:
         3- Individual items can be deleted based on their model_id
         4- the items in the cart can all be deleted at once
         5- currency can be changed
+
+
+        there is something to consider:
+        what if a user wants to buy the same item twice. each in different size or color. the code should be ready for this

@@ -13,7 +13,7 @@ const User = require("../models/User");
 // @Type: Privet
 // @Desc: add an item to the cart
 // =======================
-router.post("/", auth, add_to_cart, delete_item);
+router.post("/", auth, add_to_cart);
 
 // =======================
 // @Path: /api/cart/id

@@ -3,6 +3,7 @@ const model_select = require("../helper_functions/model_select");
 const {
   increase_quantity,
   get_total,
+  exists_in_cart,
 } = require("../helper_functions/cart_helper_functions");
 
 // =========================
@@ -16,7 +17,7 @@ const add_to_cart = async (req, res, next) => {
         .status(400)
         .json({ result: false, message: "Invalid Product Details" });
 
-    let { id, type, qty } = product_info;
+    let { model_id, type, qty, colors, sizes } = product_info;
     if (!qty) qty = 1;
 
     // using the provided type, select the right model:
@@ -24,20 +25,26 @@ const add_to_cart = async (req, res, next) => {
 
     // Retreive the product from DB:
     const product = await model
-      .findOne({ model_id: id })
+      .findOne({ model_id })
       .select("name brand price colors sizes model_id");
+
+    if (!product)
+      return res
+        .status(404)
+        .json({ result: false, message: "Product not found" });
 
     // Get the user from the database and check whethere the item exist in their cart or not
     const user_info = req.user;
     const { cart } = await User.findOne({ _id: user_info.id });
 
     // check if item is already in cart
-    let is_in_cart = null;
-    for (let item of cart.items) {
-      if (item.name === product.name) {
-        is_in_cart = true;
-      }
-    }
+    if (product.sizes.indexOf(sizes) < 0 || product.colors.indexOf(colors) < 0)
+      return res.status(400).json({
+        result: false,
+        message: "The Product Does not include the supplied color or size",
+      });
+
+    let is_in_cart = exists_in_cart(cart.items, product.name, colors, sizes);
 
     if (is_in_cart) {
       // Increase the quantity
@@ -60,6 +67,8 @@ const add_to_cart = async (req, res, next) => {
       // add it to cart
       const item_to_add = product;
       product.quantity = qty;
+      if (colors) product.colors = colors;
+      if (sizes) product.sizes = sizes;
 
       const updated_items = [...cart.items, item_to_add];
 

@@ -13,4 +13,19 @@ const get_total = (array) =>
     return acc + item.quantity;
   }, 0);
 
-module.exports = { increase_quantity, get_total };
+const exists_in_cart = (array, name, color, size) => {
+  let exists = null;
+  for (let item of array) {
+    if (
+      item.name === name &&
+      item.sizes.indexOf(size) > -1 &&
+      item.colors.indexOf(color) > -1
+    ) {
+      exists = true;
+    }
+  }
+
+  return exists;
+};
+
+module.exports = { increase_quantity, get_total, exists_in_cart };
