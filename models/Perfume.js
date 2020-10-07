@@ -8,10 +8,11 @@ const product_schema = new Schema({
   brand: { type: String, trim: true, maxlength: 150 },
   description: { type: Array, required: true },
   price: { type: Number, required: true, trim: true },
-  discount: { discounted: { type: Boolean }, amount: { type: Number } },
-  photos: [String],
-  sizes: [Object],
-  quantity: { type: Number, required: true },
+  currency: { type: String, default: "usd" },
+  stock: {
+    type: Array,
+    required: true,
+  },
   // reviews and rating will empty to begin with
   reviews: [String],
   rating: {

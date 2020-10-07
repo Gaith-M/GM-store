@@ -8,11 +8,12 @@ const footwear_schema = new Schema({
   brand: { type: String, trim: true, maxlength: 150 },
   description: { type: Array, required: true },
   price: { type: Number, required: true, trim: true },
+  currency: { type: String, default: "usd" },
   discount: { discounted: { type: Boolean }, amount: { type: Number } },
-  photos: [String],
-  sizes: [Object],
-  colors: [Object],
-  quantity: { type: Number, required: true },
+  stock: {
+    type: Array,
+    required: true,
+  },
   // reviews and rating will empty to begin with
   reviews: [String],
   rating: {

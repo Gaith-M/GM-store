@@ -1,6 +1,7 @@
 // middlewares
 const { validationResult } = require("express-validator");
 const model_select = require("../helper_functions/model_select");
+const extract_type = require("../helper_functions/extract_type");
 
 // =====================
 // add a product
@@ -15,25 +16,18 @@ const add_product = async (req, res, next) => {
     });
 
   try {
-    const { model_id, type } = req.body;
+    const { type } = req.body;
 
     // set which model to use
     const model = model_select(type);
-    console.log(model);
+
     if (!model)
       res.status(400).json({ result: false, message: "invalid type" });
 
-    // check if model_id isn't dupe
-    const id_available = await model.findOne({ model_id });
-
-    if (id_available)
-      return res.status(409).json({
-        result: false,
-        message: "the provided model ID already exists",
-      });
-
-    // pick which model to use based on the type:
+    //Create an empty product object
     const new_product = new model({});
+
+    // Fill it with the provided data in the body of the request
     for (let prop in req.body) {
       if (req.body[prop] !== "type") {
         new_product[prop] = req.body[prop];
@@ -52,7 +46,8 @@ const add_product = async (req, res, next) => {
 // get a product using its model id
 // =====================
 const get_product = async (req, res, next) => {
-  const { id, type } = req.params;
+  const { id } = req.params;
+  const [type] = extract_type(id);
   try {
     let model = model_select(type);
     console.log(model);
@@ -86,7 +81,8 @@ const search_products = async (req, res, next) => {
 // =====================
 const update_product = async (req, res, next) => {
   try {
-    const { id, type } = req.params;
+    const { id } = req.params;
+    const [type] = extract_type(id);
 
     let model = model_select(type);
     if (!model)
@@ -122,7 +118,8 @@ const update_product = async (req, res, next) => {
 // =====================
 const delete_product = async (req, res, next) => {
   try {
-    const { id, type } = req.params;
+    const { id } = req.params;
+    const [type] = extract_type(id);
 
     let model = model_select(type);
     if (!model)

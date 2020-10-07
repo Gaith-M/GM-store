@@ -14,22 +14,22 @@ module.exports = async (req, res, next) => {
       return res.status(400).json({ result: false, message: "invalid type" });
 
     const from = req.query.from || 0;
-    const to = req.query.to || 999999;
-    const inStock = req.query.inStock === "true" ? true : false || false;
+    const to = req.query.to || 9999999;
     const rating = req.query.rating || 0;
+    const category = req.query.category || null;
 
     search_conditions = {
       sex,
       price: { $gte: from, $lte: to },
-      quantity: { $gte: inStock ? 1 : 0 },
       "rating.overall": { $gte: rating },
     };
 
-    tags.length > 0 ? (search_conditions.tags = { $in: tags }) : null;
+    if (tags.length > 0) search_conditions.tags = { $in: tags };
+    if (category) search_conditions.category = category;
 
     const products = await model
       .find(search_conditions)
-      .select("name brand price sex quantity tags model_id -_id");
+      .select("name brand price category sex quantity tags model_id -_id");
 
     req.products = products;
     next();

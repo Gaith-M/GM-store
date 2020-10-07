@@ -8,6 +8,7 @@ const {
 } = require("../controllers/cart");
 const auth = require("../middlewares/auth");
 const User = require("../models/User");
+
 // =======================
 // @Path: /api/cart
 // @Type: Privet
@@ -16,24 +17,8 @@ const User = require("../models/User");
 router.post("/", auth, add_to_cart);
 
 // =======================
-// @Path: /api/cart/id
-// Fix cart if broken when I'm working on it
+// There is no endpoint to retreive the cart on its own since it will be a part of the user document
 // =======================
-router.post("/fix/:id", async (req, res, next) => {
-  console.log("recieved!");
-  try {
-    const { id } = req.params;
-    const user = await User.findOneAndUpdate(
-      { _id: id },
-      { "cart.items": [] },
-      { new: true, useFindAndModify: false }
-    );
-    console.log(user);
-    res.status(200).json("done");
-  } catch (err) {
-    next(err);
-  }
-});
 
 // =======================
 // @Path: /api/cart

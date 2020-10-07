@@ -1,0 +1,120 @@
+This document is the documentaion for all endpoints (how they operate and how to use them)
+
+Products Endpoints: each type of product corresponds to its own schema. all schemas are the same however. the reason behind this is to keep each collection of products containing related items. this will makes queries faster and results in easier managment
+
+A) Adding a product
+
+All products follow the same schema:
+{
+  model_id: { type: String, required: true, unique: true },
+  sex: { type: String, required: true },
+  category: { type: String, required: true },
+  tags: { type: Array, required: true },
+  name: { type: String, required: true, trim: true, maxlength: 150 },
+  brand: { type: String, trim: true, maxlength: 150 },
+  description: { type: Array, required: true },
+  price: { type: Number, required: true, trim: true },
+  currency: { type: String, default: "usd" },
+  discount: { discounted: { type: Boolean }, amount: { type: Number } },
+  stock: {
+    type: Array,
+    required: true,
+  },
+  // reviews and rating will empty to begin with
+  reviews: [Object],
+  rating: {
+    one: { type: Number, default: 0 },
+    two: { type: Number, default: 0 },
+    three: { type: Number, default: 0 },
+    four: { type: Number, default: 0 },
+    five: { type: Number, default: 0 },
+    overall: { type: Number, default: 0 },
+  },
+  post_date: { type: Date, default: Date.now() },
+}
+
+--Product Properties:
+
+1) model_id: a string. must follow the following structure:
+    type_category_serial-number
+    Example: accessories_hats_029zk2919as01
+    Both category and type must be pluralized and must be in the exact same order
+
+2) sex: to whom the product is aimed to. It can accept the following options: men - women - unisex
+
+3) category: this refers to the subcategory of the item. for example if you are adding a necklace, it will be of type accessories, category necklaces
+
+4) name: the name of the product. it is used for search as well
+
+5) brand: the name of the brand. it is used for search as well
+
+6) description: this is an array which will contain product details. you can list different information about the product, and they will be displayed in a bullted list
+
+7) price: price of the item
+
+8) currency: will be set by default to 'usd'
+
+9) discount: if set to true, the price will be adjusted according to the supplied rate
+
+10) Stock: it will contain objects. each object will reffer to product variation. to explain further, each object will refer to a size of the product, and how many pieces is there of it for each color. Example Below.
+
+**Instead of having colors, the photos will show the different colors of the product
+each object of the "variation" prop will hold an item that correspond to the size of the object and will represent a different color. it will also hold the photos array which in turn hold the name of the color to be shown somehow, and an alt for the photo for better accessbility
+
+How this will render:
+
+The stock property contains an array of products illustrated below. the array should be iterated and for each size it will show a set of the available colors with the a little mark that indicates the stock status (as in: in stock / out of stock)
+
+  [
+    {
+      size: s,
+      dimensions: '4x5',
+      variation: [
+        {
+          quantity: 20,
+          photos: [{url: ------, alt: -------, colorName: --------}, {---------}]
+        },
+        {
+          quantity: 10,
+          photos: [------]
+        },
+        {
+          quantity: 0,
+          photos: [------]
+        }
+      ]
+    },
+    {
+      size: m,
+      dimensions: '6x7',
+      colors: [
+        {....},
+        {.....}
+      ]
+    }
+  ]
+
+11) rating and reviews: these will hold comments and ratings left by users
+
+12) post date: when the product was posted
+
+13) tags: it will store keywords related to the item. it helps with searching
+
+
+Product Endpoints Are: (The Prefix is /api/product)
+
+A) Add a product : /add (can only be done by an admin)
+
+B) Get product: /search/:sex/:type this is the classical search route. it will return items based on sex and type. it's paginated, and can be customized using query string.
+the criteria which can be filtered with are:
+  from: number. select starting price. it defaults to 0
+  to: number. select top price. default to 9999999
+  category: select a category within the type. if it's not specified, the result will be everything in the selected type
+  tags: an array of strings. it returns items that has the specified tags in them if specified
+  rating: number. it returns items that has the specified rating or higher. default to 0
+
+C) get one product using its model_id: /:id
+
+D) patch product: /:id . can only be done by an admin
+
+E) delete product: /:id

@@ -5,14 +5,14 @@ const has_role = require("../middlewares/has_role");
 // =======================
 // @Path: /api/order
 // @Type: Privet
-// @Desc: create a new order and add it to history (after a successful checkout)
+// @Desc: create a new order
 // =======================
 router.post("/", auth, (req, res, next) => res.json("Order"));
 
 // =======================
 // @Path: /api/order/admin
 // @Type: Privet
-// @Desc: get the full history of orders for admins. it allows data aggregation and filteration
+// @Desc: get the full history of orders for admins. only the submitted orders
 // =======================
 router.post("/", auth, has_role("admin"), (req, res, next) =>
   res.json("Order")

@@ -36,7 +36,7 @@ router.get(
 // @Type: Public
 // @Desc: Get a product by its model id and type
 // ======================
-router.get("/:type/:id", get_product);
+router.get("/:id", get_product);
 
 // ======================
 // @Path: api/product
@@ -49,18 +49,15 @@ router.post(
   has_role("admin"),
   [
     body("type").exists().withMessage("product type is required"),
-    body("sex").exists().withMessage("name is required"),
+    body("sex").exists().withMessage("sex is required"),
     body("name").exists().withMessage("name is required"),
+    body("model_id").exists().withMessage("model id is required"),
     body("category").exists().withMessage("category is required"),
-    body("tags").exists().withMessage("tags is required"),
     body("brand").exists().withMessage("brand is required"),
     body("description").exists().withMessage("description is required"),
     body("price").exists().withMessage("price is required"),
-    body("quantity").exists().withMessage("quantity is required"),
-    body("photos").exists().withMessage("photos are required"),
-    body("colors"),
     body("discounted"),
-    body("sizes"),
+    body("stock"),
   ],
   add_product
 );
@@ -70,13 +67,13 @@ router.post(
 // @Type: Privet
 // @Desc: update a product using its model number - for admin only
 // ======================
-router.patch("/:type/:id", auth, has_role("admin"), update_product);
+router.patch("/:id", auth, has_role("admin"), update_product);
 
 // ======================
 // @Path: api/product/:id
 // @Type: Privet
 // @Desc: delete a product using its model number - for admin only
 // ======================
-router.delete("/:type/:id", auth, has_role("admin"), delete_product);
+router.delete("/:id", auth, has_role("admin"), delete_product);
 
 module.exports = router;
