@@ -2,7 +2,7 @@ const JWT = require("jsonwebtoken");
 const User = require("../models/User");
 const new_tokens = require("../helper_functions/new_tokens");
 
-// stop the process if the main token is invalid (not just expired, but wrong)
+// stop the process if the main token is invalid
 const auth = async (req, res, next) => {
   const token = req.headers["x-auth-token"];
   if (token) {
@@ -14,6 +14,7 @@ const auth = async (req, res, next) => {
     } catch (err) {
       // if the code reaches here, it means the token supplied was invalid (expired most likely)
       // so the refresh process will take place here
+      // if no refreash token is available nor it's valid, prompt the user to login
       const old_refresh_token = req.headers["x-refresh-token"];
 
       if (!old_refresh_token)

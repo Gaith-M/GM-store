@@ -11,7 +11,7 @@ module.exports = async (req, res, next) => {
     const start_index = (page - 1) * limit;
     const end_index = page * limit;
 
-    const results = {};
+    const results = {total_pages};
     if (page > 1) results.previous = { page: page - 1, limit };
     if (end_index < document_count) results.next = { page: page + 1, limit };
 

@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const passport = require("passport");
+const JWT = require("jsonwebtoken");
 const { body } = require("express-validator");
 const { register, login } = require("../controllers/user");
-const JWT = require("jsonwebtoken");
 
 // =======================
 // @Path: /api/auth/register

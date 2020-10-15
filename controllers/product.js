@@ -2,6 +2,8 @@
 const { validationResult } = require("express-validator");
 const model_select = require("../helper_functions/model_select");
 const extract_type = require("../helper_functions/extract_type");
+const create_product = require("../helper_functions/create_product");
+const create_update_object = require("../helper_functions/update_object");
 
 // =====================
 // add a product
@@ -18,21 +20,10 @@ const add_product = async (req, res, next) => {
   try {
     const { type } = req.body;
 
-    // set which model to use
-    const model = model_select(type);
+    const new_product = create_product(type, req.body);
 
-    if (!model)
-      res.status(400).json({ result: false, message: "invalid type" });
-
-    //Create an empty product object
-    const new_product = new model({});
-
-    // Fill it with the provided data in the body of the request
-    for (let prop in req.body) {
-      if (req.body[prop] !== "type") {
-        new_product[prop] = req.body[prop];
-      }
-    }
+    if (!new_product)
+      return res.status(400).json({ result: false, message: "invalid type" });
 
     const product = await new_product.save();
 
@@ -47,10 +38,11 @@ const add_product = async (req, res, next) => {
 // =====================
 const get_product = async (req, res, next) => {
   const { id } = req.params;
+  // The id holds the type of the product. it will be used to select the correct model, then fetch the product using the whole id
   const [type] = extract_type(id);
   try {
     let model = model_select(type);
-    console.log(model);
+
     if (!model)
       return res.status(400).json({ result: false, message: "invalid type" });
 
@@ -88,11 +80,7 @@ const update_product = async (req, res, next) => {
     if (!model)
       return res.status(400).json({ result: false, message: "invalid type" });
 
-    const fields_to_update = {};
-
-    for (let prop in req.body) {
-      fields_to_update[prop] = req.body[prop];
-    }
+    const fields_to_update = create_update_object(req.body);
 
     // check if product exists
     const exsit = await model.findOne({ model_id: id });
@@ -104,7 +92,7 @@ const update_product = async (req, res, next) => {
     const updated_product = await model.findOneAndUpdate(
       { model_id: id },
       fields_to_update,
-      { new: true }
+      { new: true, useFindAndModify: false }
     );
 
     res.status(200).json({ result: true, updated_product });

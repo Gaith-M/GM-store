@@ -118,3 +118,33 @@ C) get one product using its model_id: /:id
 D) patch product: /:id . can only be done by an admin
 
 E) delete product: /:id
+
+
+
+Charge Endpoint:
+
+How Charge will work:
+  There is two options:
+  A) Buy now
+  B) Add to cart
+
+  if user adds the item to the cart. he will have to move to the cart in order to continue the charge process.
+  on the cart page, he will see the product, their details, they can be updated
+
+  when the user is ready and have at least one item in the cart, he can procced to checkout via a button
+
+  the other method "buy now" will immediatly move the user to the checkout page
+
+  so the charge route will be used as is with the same method
+
+  I'll start working on the buy now method and set the charge route
+
+  When "buy now" option is selected. the product id isn't being sent in the url
+
+  The id can be linked to the button itself and be sent in the request body
+  same will happen with the cart method
+
+  the ids of the product will be inside a ids property in the body of the request
+
+  they will be inside an array. buy now = 1 id i the array
+  via cart there will be one or more
