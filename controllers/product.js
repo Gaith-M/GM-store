@@ -9,15 +9,15 @@ const create_update_object = require("../helper_functions/update_object");
 // add a product
 // =====================
 const add_product = async (req, res, next) => {
-  const validation_results = validationResult(req);
-
-  if (!validation_results.isEmpty())
-    return res.json({
-      result: false,
-      errors: validation_results.array({ onlyFirstError: true }),
-    });
-
   try {
+    const validation_results = validationResult(req);
+
+    if (!validation_results.isEmpty())
+      return res.json({
+        result: false,
+        errors: validation_results.array({ onlyFirstError: true }),
+      });
+
     const { type } = req.body;
 
     const new_product = create_product(type, req.body);
