@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const model_select = require("../helper_functions/model_select");
+const extract_type = require("../helper_functions/extract_type");
 const {
   increase_quantity,
   get_total,
@@ -12,13 +13,16 @@ const {
 const add_to_cart = async (req, res, next) => {
   try {
     const { product_info } = req.body || null;
+
     if (!product_info)
       return res
         .status(400)
         .json({ result: false, message: "Invalid Product Details" });
 
-    let { model_id, type, qty, colors, sizes } = product_info;
+    let { model_id, qty, colors, sizes } = product_info;
     if (!qty) qty = 1;
+
+    const [type] = extract_type(model_id);
 
     // using the provided type, select the right model:
     const model = model_select(type);
@@ -26,7 +30,7 @@ const add_to_cart = async (req, res, next) => {
     // Retreive the product from DB:
     const product = await model
       .findOne({ model_id })
-      .select("name brand price colors sizes model_id");
+      .select("name brand price stock model_id");
 
     if (!product)
       return res
@@ -37,18 +41,21 @@ const add_to_cart = async (req, res, next) => {
     const user_info = req.user;
     const { cart } = await User.findOne({ _id: user_info.id });
 
-    // check if item is already in cart
-    if (product.sizes.indexOf(sizes) < 0 || product.colors.indexOf(colors) < 0)
-      return res.status(400).json({
-        result: false,
-        message: "The Product Does not include the supplied color or size",
-      });
+    // Checking if the item is in stock should be done on client side. the client should indicate that an item is out of stock, and prevent placing an order
 
+    // check if the requested item is already in cart
     let is_in_cart = exists_in_cart(cart.items, product.name, colors, sizes);
+    console.log(is_in_cart);
 
     if (is_in_cart) {
-      // Increase the quantity
-      const updated_items = increase_quantity(cart.items, product.name, qty);
+      // Increase the quantity of the item which matches the description
+      const updated_items = increase_quantity(
+        cart.items,
+        product.name,
+        colors,
+        sizes,
+        qty
+      );
 
       // Calculate total quantity:
       const total = get_total(updated_items);
@@ -65,10 +72,12 @@ const add_to_cart = async (req, res, next) => {
       res.status(200).json({ result: "updated", updated_cart });
     } else {
       // add it to cart
-      const item_to_add = product;
-      product.quantity = qty;
-      if (colors) product.colors = colors;
-      if (sizes) product.sizes = sizes;
+      const { name, brand, price, model_id } = product;
+      const item_to_add = { name, brand, price, model_id, sizes, colors };
+      console.log(item_to_add);
+
+      // set the requested quantity
+      item_to_add.quantity = qty;
 
       const updated_items = [...cart.items, item_to_add];
 
@@ -175,7 +184,7 @@ const empty_cart = async (req, res, next) => {
   try {
     const update_cart = await User.findOneAndUpdate(
       { _id: req.user.id },
-      { "cart.items": [] },
+      { "cart.items": [], "cart.total_quantity": 0 },
       { new: true, useFindAndModify: false }
     );
 

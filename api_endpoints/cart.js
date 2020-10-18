@@ -7,7 +7,6 @@ const {
   change_currency,
 } = require("../controllers/cart");
 const auth = require("../middlewares/auth");
-const User = require("../models/User");
 
 // =======================
 // @Path: /api/cart
