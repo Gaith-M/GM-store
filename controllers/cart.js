@@ -19,7 +19,7 @@ const add_to_cart = async (req, res, next) => {
         .status(400)
         .json({ result: false, message: "Invalid Product Details" });
 
-    let { model_id, qty, colors, sizes } = product_info;
+    let { model_id, qty, color, size } = product_info;
     if (!qty) qty = 1;
 
     const [type] = extract_type(model_id);
@@ -44,16 +44,15 @@ const add_to_cart = async (req, res, next) => {
     // Checking if the item is in stock should be done on client side. the client should indicate that an item is out of stock, and prevent placing an order
 
     // check if the requested item is already in cart
-    let is_in_cart = exists_in_cart(cart.items, product.name, colors, sizes);
-    console.log(is_in_cart);
+    let is_in_cart = exists_in_cart(cart.items, product.name, color, size);
 
     if (is_in_cart) {
       // Increase the quantity of the item which matches the description
       const updated_items = increase_quantity(
         cart.items,
         product.name,
-        colors,
-        sizes,
+        color,
+        size,
         qty
       );
 
@@ -69,12 +68,12 @@ const add_to_cart = async (req, res, next) => {
         },
         { new: true, useFindAndModify: false }
       );
+
       res.status(200).json({ result: "updated", updated_cart });
     } else {
-      // add it to cart
+      // add item to cart
       const { name, brand, price, model_id } = product;
-      const item_to_add = { name, brand, price, model_id, sizes, colors };
-      console.log(item_to_add);
+      const item_to_add = { name, brand, price, size, color, model_id };
 
       // set the requested quantity
       item_to_add.quantity = qty;
@@ -92,6 +91,7 @@ const add_to_cart = async (req, res, next) => {
         },
         { new: true, useFindAndModify: false }
       );
+
       res.status(200).json({ result: "added", updated_cart });
     }
   } catch (err) {

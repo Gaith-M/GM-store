@@ -1,6 +1,6 @@
 const increase_quantity = (array, name, color, size, qty) =>
   array.map((item) => {
-    if (item.name === name && item.colors === color && item.sizes === size) {
+    if (item.name === name && item.color === color && item.size === size) {
       item.quantity = item.quantity + qty;
       return item;
     } else {
@@ -16,7 +16,7 @@ const get_total = (array) =>
 const exists_in_cart = (array, name, color, size) => {
   let exists = null;
   for (let item of array) {
-    if (item.name === name && item.sizes === size && item.colors === color) {
+    if (item.name === name && item.size === size && item.color === color) {
       exists = true;
     }
   }
